@@ -14,6 +14,10 @@ En los tipos de volúmenes que se acaban de mencionar, se ha nombrado la peresis
   * ***PV*** (Volumen Persistente): Se trata de un espacio de almacenamiento en la red que ha sido aprovisionada por el administrador. Es un recurso en el clúster que es independiente de cualquier pod individual que use el PV. 
   * ***PVC*** (Reclamación de Volumen Persistente): Se trata de un almacenamiento solicitado por Kubernetes para sus pods. El usuario no necesita conocer el aprovisionamiento subyacente, es decir, el usuario desconoce como y donde se le ha asignado el espacio solicitado. 
   
+<p align="center">
+ <img src="https://assets.openshift.com/hubfs/Imported_Blog_Media/pv_arch.png" width="350" height="290" />
+</p>
+  
 ### Namespace
 Namespace es un objeto que permite crear una clasificación adicional en un recurso, es decir, dentro de un recurso se pueden crear diferentes agrupaciones en función del objetivo del mismo. Esta herramienta es muy útil cuando disponemos de múltiples agrupaciones con nombres parecidos en el mismo clúster. Gracias a este objeto, la comunicación pod-to-pod se ve facilitada si se emplea el mismo namespace. Al ser clústeres virutales, se pueden ubicar encima del mismo clúster físico. 
 <p align="center">
@@ -30,5 +34,5 @@ Secrets son objetos que permiten almacenar datos confidenciales, como lo son nom
 ConfigMaps son objetos que permiten almacenar datos no confidenciales con formato clave-valor. Los pods pueden emplear estos objetos como variables de entorno, argumentos en la línea de comando o como ficheros de configuración en un volumen. A diferencia de Secrets, este objeto no proporciona encriptación alguna. 
 
 <p align="center">
- <img src="https://cloud.google.com/kubernetes-engine/images/configmap.png" width="150" height="230" />
+ <img src="https://drek4537l1klr.cloudfront.net/luksa/Figures/07fig02.jpg" width="300" height="240" />
 </p>
