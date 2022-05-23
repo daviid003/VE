@@ -15,24 +15,24 @@ En los tipos de volúmenes que se acaban de mencionar, se ha nombrado la peresis
   * ***PVC*** (Reclamación de Volumen Persistente): Se trata de un almacenamiento solicitado por Kubernetes para sus pods. El usuario no necesita conocer el aprovisionamiento subyacente, es decir, el usuario desconoce como y donde se le ha asignado el espacio solicitado. 
   
 <p align="center">
- <img src="https://assets.openshift.com/hubfs/Imported_Blog_Media/pv_arch.png" width="350" height="290" />
+ <img src="https://assets.openshift.com/hubfs/Imported_Blog_Media/pv_arch.png" width="450" height="390" />
 </p>
   
 ### Namespace
 Namespace es un objeto que permite crear una clasificación adicional en un recurso, es decir, dentro de un recurso se pueden crear diferentes agrupaciones en función del objetivo del mismo. Esta herramienta es muy útil cuando disponemos de múltiples agrupaciones con nombres parecidos en el mismo clúster. Gracias a este objeto, la comunicación pod-to-pod se ve facilitada si se emplea el mismo namespace. Al ser clústeres virutales, se pueden ubicar encima del mismo clúster físico. 
 <p align="center">
- <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1624180587417/PJTk9hiNv.png?auto=compress,format&format=webp" width="350" height="200" />
+ <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1624180587417/PJTk9hiNv.png?auto=compress,format&format=webp" width="500" height="300" />
 </p>
 
 ### Secrets
 Secrets son objetos que permiten almacenar datos confidenciales, como lo son nombres de usuario y contraseñas o tokens. Estos objetos pueden crearse a partir de archivos TXT o desde archivos yaml. Una vez son creados, estos objetos se pueden estructurar en un pod o en el controlador de réplicas como variables de entorno o volúmenes. 
 <p align="center">
- <img src="https://drek4537l1klr.cloudfront.net/yuen/v-6/Figures/07_img_0001.png" width="300" height="200" />
+ <img src="https://drek4537l1klr.cloudfront.net/yuen/v-6/Figures/07_img_0001.png" width="500" height="400" />
 </p>
 
 ### ConfigMaps
 ConfigMaps son objetos que permiten almacenar datos no confidenciales con formato clave-valor. Los pods pueden emplear estos objetos como variables de entorno, argumentos en la línea de comando o como ficheros de configuración en un volumen. A diferencia de Secrets, este objeto no proporciona encriptación alguna. Los ConfigMaps están diseñados específicamente para encapsular pequeñas cantidades de datos de configuración insensibles. Se usan comúnmente para almacenar la dirección IP del servidor de la base de datos, la dirección de correo electrónico saliente para su aplicación y otras configuraciones específicas de la aplicación que necesita configurar fuera de sus Pods.
 
 <p align="center">
- <img src="https://drek4537l1klr.cloudfront.net/luksa/Figures/07fig02.jpg" width="300" height="240" />
+ <img src="https://drek4537l1klr.cloudfront.net/luksa/Figures/07fig02.jpg" width="450" height="350" />
 </p>
