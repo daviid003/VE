@@ -1,15 +1,15 @@
-apiVersion: apps/v1
+apiVersion: apps/v1 #DaemonSet
 kind: DaemonSet
 metadata:
-  name: fluentd-elasticsearch
+  name: fluentd-elasticsearch #La función de este ejemplo, es la de ejecutar la imagen Docker fluentd-elasticsearch
   namespace: kube-system
   labels:
     k8s-app: fluentd-logging
 spec:
-  selector:
+  selector: #Es el selector de pod y funciona igual que el selector de un job
     matchLabels:
       name: fluentd-elasticsearch
-  template:
+  template: #Es una plantilla Pod, es decir, tiene el mismo esquema que un Pod, excepto por el hecho de que está anidado
     metadata:
       labels:
         name: fluentd-elasticsearch
