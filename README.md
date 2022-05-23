@@ -25,13 +25,13 @@ Namespace es un objeto que permite crear una clasificación adicional en un recu
 </p>
 
 ### Secrets
-Secrets son objetos que permiten almacenar datos confidenciales, como lo son nombres de usuario y contraseñas (con cifrado). Estos objetos pueden crearse a partir de archivos TXT o desde archivos yaml. Una vez son creados, estos objetos se pueden estructurar en un pod o en el controlador de réplicas como variables de entorno o volúmenes. 
+Secrets son objetos que permiten almacenar datos confidenciales, como lo son nombres de usuario y contraseñas o tokens. Estos objetos pueden crearse a partir de archivos TXT o desde archivos yaml. Una vez son creados, estos objetos se pueden estructurar en un pod o en el controlador de réplicas como variables de entorno o volúmenes. 
 <p align="center">
  <img src="https://drek4537l1klr.cloudfront.net/yuen/v-6/Figures/07_img_0001.png" width="300" height="200" />
 </p>
 
 ### ConfigMaps
-ConfigMaps son objetos que permiten almacenar datos no confidenciales con formato clave-valor. Los pods pueden emplear estos objetos como variables de entorno, argumentos en la línea de comando o como ficheros de configuración en un volumen. A diferencia de Secrets, este objeto no proporciona encriptación alguna. 
+ConfigMaps son objetos que permiten almacenar datos no confidenciales con formato clave-valor. Los pods pueden emplear estos objetos como variables de entorno, argumentos en la línea de comando o como ficheros de configuración en un volumen. A diferencia de Secrets, este objeto no proporciona encriptación alguna. Los ConfigMaps están diseñados específicamente para encapsular pequeñas cantidades de datos de configuración insensibles. Se usan comúnmente para almacenar la dirección IP del servidor de la base de datos, la dirección de correo electrónico saliente para su aplicación y otras configuraciones específicas de la aplicación que necesita configurar fuera de sus Pods.
 
 <p align="center">
  <img src="https://drek4537l1klr.cloudfront.net/luksa/Figures/07fig02.jpg" width="300" height="240" />
