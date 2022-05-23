@@ -1,6 +1,9 @@
 # Práctica Final
+En esta práctica se ha llevado a cabo una explicación de los objetos y controladores que no se han visto en clase, además de incluir códigos de ejemplo de cada uno de ellos y un ejemplo que engloba la mayoría de ellos. 
+
 ## Controladores
 En este apartado se van a definir los distintos controladores que no se han visto en clase de kubernetes. 
+
 ### StatefulSet
 Un Statefulset es un controlador de Kubernetes que se usa para administrar y mantener uno o más pods. Está diseñado para usarse con aplicaciones con estado y sistemas distribuidos. Para saber cuándo usar StatefulSets, a diferencia de otros controladores, veamos dos ejemplos:
   * **1**: Tenemos una base de datos MySQL y la amplio a tres réplicas, y una aplicación quiere acceder al clúster de MySQL para leer y escribir datos. La solicitud se reenviará a tres pods. Sin embargo, la solicitud de escritura solo se reenviará al primer pod y los datos se sincronizarán con los otros pods. Esto se puede lograr usando Statefulset.
@@ -21,7 +24,6 @@ En resumen, StatefulSets ofrece las siguientes ventajas en comparación con los 
   * **4**: Solo se crearán nuevos Pods si el Pod anterior está en estado de ejecución y clonará los datos del Pod anterior.
   * **5**: La eliminación de Pods ocurre en orden inverso.
 
-
 ### DaemonSet
 Un Daemonset funciona de manera que se garantiza que todos (o algunos) de los nodos ejecuten una copia de un Pod. Conforme se añaden más nodos al clúster, nuevos Pods son añadidos a los mismos. Conforme se eliminan nodos del clúster, dichos Pods se destruyen. Al eliminar un DaemonSet se limpian todos los Pods que han sido creados.
 
@@ -36,8 +38,6 @@ Algunos de los casos en los que se usa este tipo de controlador son:
  
 De forma básica, se debería de usar un DaemonSet, cubriendo todos los nodos, por cada tipo de proceso.
 
-
-
 ### Job
 Un Job funciona creando uno o más pods y continuará reintentando la ejecución de los pods hasta que un número específico de ellos finalice con éxito. A medida que los pods se completan con éxito, el trabajo realiza un seguimiento de las finalizaciones exitosas. Cuando se alcanza un número específico de finalizaciones correctas, la tarea (es decir, por el Job) se completa. Eliminar un Job limpiará los Pods que creó. La suspensión de un Job eliminará sus Pods activos hasta que el Job se reanude nuevamente.
 
@@ -49,8 +49,10 @@ Un caso simple es crear un objeto Job para ejecutar de manera fiable un pod hast
 También se puede usar un Job para ejecutar varios Pods en paralelo.
 Si se deseda ejecutar un Job en un horario concreto se utiliza CronJob, que ejecuta el Job periódicamente en el horario indicado.
 
+
 ## Objetos
 En este apartado se van a definir los distintos objetos que no se han visto en clase de Kubernetes.
+
 ### Volume
 Un volumen es un directorio al que pueden acceder los contenedores de un pod. Estos volúmenes no se limitan a ningún contenedor, sino que adminte todos los contenedores implementados dentro del pod. Existen numerosos tipos de volúmenes con diferentes configuraciones. Los más destacados son los siguientes:
   * **emptyDir**: Tipo de volumen que se crea cuando un pod se asigna por primera vez a un nodo. Permanece activo mientas el pod se ejecuta en ese nodo. Inicialmente se encuentra vacío y los contenedores en el pod pueden leer y escribir sobre él. Una vez se elimina el pod del nodo, se borran todos los datos.
@@ -68,17 +70,20 @@ En los tipos de volúmenes que se acaban de mencionar, se ha nombrado la peresis
  <img src="https://assets.openshift.com/hubfs/Imported_Blog_Media/pv_arch.png" width="450" height="390" />
 </p>
   
+  
 ### Namespace
 Namespace es un objeto que permite crear una clasificación adicional en un recurso, es decir, dentro de un recurso se pueden crear diferentes agrupaciones en función del objetivo del mismo. Esta herramienta es muy útil cuando disponemos de múltiples agrupaciones con nombres parecidos en el mismo clúster. Gracias a este objeto, la comunicación pod-to-pod se ve facilitada si se emplea el mismo namespace. Al ser clústeres virutales, se pueden ubicar encima del mismo clúster físico. 
 <p align="center">
  <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1624180587417/PJTk9hiNv.png?auto=compress,format&format=webp" width="500" height="300" />
 </p>
 
+
 ### Secrets
-Secrets son objetos que permiten almacenar datos confidenciales, como lo son nombres de usuario y contraseñas o tokens. Estos objetos pueden crearse a partir de archivos TXT o desde archivos yaml. Una vez son creados, estos objetos se pueden estructurar en un pod o en el controlador de réplicas como variables de entorno o volúmenes. 
+Secrets son objetos que permiten almacenar datos confidenciales, como lo son nombres de usuario y contraseñas o tokens. Estos objetos pueden crearse a partir de archivos TXT o desde archivos yaml. Una vez son creados, estos objetos se pueden estructurar en un pod o en el controlador de réplicas como variables de entorno o volúmenes. Debido a que los secretos se pueden crear independientemente de los pods que los usan, existe menos riesgo de que el secret (y sus datos) queden expuestos durante el flujo de trabajo de creación, visualización y edición de pods. Kubernetes y las aplicaciones que se ejecutan en su clúster también pueden tomar precauciones adicionales con los secrets, como evitar escribir datos secretos en el almacenamiento no volátil.
 <p align="center">
- <img src="https://drek4537l1klr.cloudfront.net/yuen/v-6/Figures/07_img_0001.png" width="500" height="400" />
+ <img src="https://drek4537l1klr.cloudfront.net/yuen/v-6/Figures/07_img_0001.png" width="450" height="350" />
 </p>
+
 
 ### ConfigMaps
 ConfigMaps son objetos que permiten almacenar datos no confidenciales con formato clave-valor. Los pods pueden emplear estos objetos como variables de entorno, argumentos en la línea de comando o como ficheros de configuración en un volumen. A diferencia de Secrets, este objeto no proporciona encriptación alguna. Los ConfigMaps están diseñados específicamente para encapsular pequeñas cantidades de datos de configuración insensibles. Se usan comúnmente para almacenar la dirección IP del servidor de la base de datos, la dirección de correo electrónico saliente para su aplicación y otras configuraciones específicas de la aplicación que necesita configurar fuera de sus Pods.
