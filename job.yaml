@@ -1,9 +1,9 @@
-apiVersion: batch/v1
+apiVersion: batch/v1 #Job que calcula que calcula pi en 2000 pods y los imprime. Su ejecución es de 10 segundos aproximadamente.
 kind: Job
 metadata:
   name: pi
 spec:
-  template:
+  template: #Template de Pod, con el mismo esquema, excepto que está anidado.
     spec:
       containers:
       - name: pi
