@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume # Tipo PV. SI queremos PVC sería PersistentVolumeClaim
+metadata: 
+  name: pv # Nombre del PV
+  labels:
+    type: local # Almacenamiento local
+spec: 
+  capacity:
+    storage: 1Gi # Espacio reservado
+  accessModes:
+    - ReadWriteOnce # Permiso asignado de lectura/escritura
+  hostPath:
+    path: "local/data" # Ruta para almacenarlo

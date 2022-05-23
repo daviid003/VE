@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: pod-ejemplo  # nombre del pod
+   namespace: desarrolladores # namespace al que se está asignando
+spec:
+   containers: # contenedor del pod con una base de datos.
+    - name: pod-ejemplo
+      image: mysql:8.0
+
