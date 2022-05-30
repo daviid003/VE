@@ -1,0 +1,141 @@
+#---------------Namespace de desarrollo---------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: principal  # Nombre del namespace 
+---
+
+#---------------PVC mysql---------------
+apiVersion: v1
+kind: PersistentVolumeClaim  # Tipo de volumen empleado 
+metadata:
+  name: mysql-pvc
+  labels:
+    app: phpmyadmin 
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+
+#---------------Secret de mysql---------------
+apiVersion: v1
+kind: Secret # Secret de la base de datos en modo root.
+metadata:
+  name: mysql-secrets
+type: Opaque
+data:
+  password: Y2FwaXRhbnRydWVubw== # capitantrueno encriptado
+---
+
+#---------------MYSQL---------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql
+  namespace: principal
+  labels:
+    app: sql
+spec:
+  revisionHistoryLimit: 2
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sql
+  template:
+    metadata:
+      labels:
+        app: sql
+    spec:
+      containers:
+        - name: sql
+          image: mysql:8.0
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+                - name: mysql-secrets
+                  key: password
+          - name: MYSQL_DATABASE
+            value: dbphp
+          - name: MYSQL_USER
+            value: davidJuan
+          - name: MYSQL_PASSWORD
+            value: capitantrueno
+
+          ports:
+          - containerPort: 3306
+
+          volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+---
+
+#---------------phpmyadmin---------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-deployment
+  namespace: principal
+  labels:
+    app: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+        - name: phpmyadmin
+          image: phpmyadmin/phpmyadmin
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: mysqlservice
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              value: capitantrueno
+---
+
+#-------------- Servicio phpmyadmin---------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadminservice
+spec:
+  type: NodePort
+  selector:
+    app: phpmyadmin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+
+#-------------- Servicio mysql---------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqlservice
+spec:
+  clusterIP: None
+  selector:
+    app: sql
+  ports:
+    - protocol: TCP
+      port: 3306
+      
